@@ -1,3 +1,7 @@
+########################################################
+#Author: Leonardo Deitos Veiga
+########################################################
+
 class Node:
     def __init__(self, name, source = None, target_left = None, target_right = None ):
         self.source = source

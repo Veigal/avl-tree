@@ -1,3 +1,6 @@
+########################################################
+#Author: Leonardo Deitos Veiga
+########################################################
 from tkinter import *
 from tkinter import filedialog
 import tkinter.scrolledtext as ScrolledText
@@ -43,12 +46,12 @@ class Window:
         self.main_label["font"] = ("Arial", "10", "bold")
         self.main_label.pack()
 
-        # Arquivo
+        # Archive
         self.button_directory = Button(self.directory_container)
         self.button_directory["text"] = "Procurar arquivo"
         self.button_directory["font"] = ("Calibri", "8")
         self.button_directory["width"] = 15
-        self.button_directory["command"] = self.update_directory
+        self.button_directory["command"] = self.search_archive
         self.button_directory.pack()        
 
         # CPF
@@ -67,7 +70,7 @@ class Window:
         self.button_cpf["command"] = self.search_by_cpf
         self.button_cpf.pack()  
 
-        # Nome
+        # Name
         self.name_label = Label(self.name_container,text="Nome:", font=self.default_font)
         self.name_label.pack(side=LEFT)
 
@@ -83,7 +86,7 @@ class Window:
         self.button_name["command"] = self.search_by_name
         self.button_name.pack()  
 
-        # Data de nascimento
+        # Date of birth
         self.birth_label1 = Label(self.birth_container,text="Data de nascimento de ", font=self.default_font)
         self.birth_label1.pack(side=LEFT)
 
@@ -107,7 +110,7 @@ class Window:
         self.button_birth["command"] = self.search_by_date_birth
         self.button_birth.pack()
 
-    def update_directory(self):
+    def search_archive(self):
         root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
        
         people_file = open(root.filename, 'r')

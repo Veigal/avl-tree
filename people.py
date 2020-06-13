@@ -1,3 +1,7 @@
+########################################################
+#Author: Leonardo Deitos Veiga
+########################################################
+
 class People:
     def __init__(self, cpf, rg, name, b_date, b_city):
         self.cpf = cpf
