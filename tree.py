@@ -66,56 +66,6 @@ class Tree:
         if actual_name < name:
             self.rsearch_people_by_name(name, node.get_target_right(), people_list)
 
-
-    def remove_node(self, removed_node_name):
-        removed_node = self.search_node(removed_node_name, None)
-        source_node = removed_node.get_source()
-        self.rremove_node(removed_node)
-        self.root.set_source(None)
-        if source_node != None:
-            self.balance(source_node, None)
-
-    def rremove_node(self, removed_node):
-        if removed_node.get_target_left() == None and removed_node.get_target_right() == None:
-            if removed_node.get_source() == None:
-                self.root = None
-            elif removed_node.get_source().get_target_left() == removed_node:
-                removed_node.get_source().set_target_left(None)
-            else:
-                removed_node.get_source().set_target_right(None)
-        elif removed_node.get_target_left() == None:
-            
-            if removed_node.get_source() != None:
-                removed_node.get_target_right().set_source(removed_node.get_source())
-                if removed_node.get_source().get_target_left() == removed_node:
-                    removed_node.get_source().set_target_left(removed_node.get_target_right())
-                else:
-                    removed_node.get_source().set_target_right(removed_node.get_target_right())
-            else:
-                self.root = removed_node.get_target_right()
-                removed_node.get_target_right().set_source(None)
-        elif removed_node.get_target_right() == None:
-
-            if removed_node.get_source() != None:
-                removed_node.get_target_left().set_source(removed_node.get_source())
-                if removed_node.get_source().get_target_left() == removed_node:
-                    removed_node.get_source().set_target_left(removed_node.get_target_left())
-                else:
-                    removed_node.get_source().set_target_right(removed_node.get_target_left())
-            else:
-                self.root = removed_node.get_target_left()
-                removed_node.get_target_left().set_source(None)
-        else:
-            substitute_node = self.get_greater_node(removed_node.get_target_left())
-            substitute_node_name = substitute_node.get_name()
-            self.rremove_node(substitute_node)
-            removed_node.set_name(substitute_node_name)
-
-    def get_greater_node(self, node):
-        if node.get_target_right() == None:
-            return node    
-        return self.get_greater_node(node.get_target_right())
-
     def insert_node(self, inserted_node):
         if self.root == None:
             self.root = Node(inserted_node)
@@ -140,28 +90,6 @@ class Tree:
                inserted_node.set_source(current_node)
                return
             self.rinsert_node(inserted_node, current_node.get_target_left())
-
-
-    def preorder(self, current_node):
-        if current_node == None:
-            return
-        print(current_node.get_name().get_name(), end=" ")
-        self.preorder(current_node.get_target_left())
-        self.preorder(current_node.get_target_right())
-
-    def postorder(self, current_node):
-        if current_node == None:
-            return
-        self.postorder(current_node.get_target_left())
-        self.postorder(current_node.get_target_right())
-        print(current_node.get_name().get_name(), end=" ")
-
-    def inorder(self, current_node):
-        if current_node == None:
-            return
-        self.inorder(current_node.get_target_left())
-        print(current_node.get_name().get_name(), end=" ")
-        self.inorder(current_node.get_target_right())
     
     def symple_rotation_right(self, current_node):
         left_node = current_node.get_target_left()
@@ -248,13 +176,3 @@ class Tree:
         node_left = node.get_target_left() 
         node_right = node.get_target_right()
         return self.height(node_left) - self.height(node_right)
-
-
-    def print_tree(self):
-        print("\nPré ordem: ", end="")
-        self.preorder(self.root)
-        print("\nPós ordem: ", end="")
-        self.postorder(self.root)
-        print("\nEm ordem: ", end="")
-        self.inorder(self.root)
-    

@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import filedialog
 import tkinter.scrolledtext as ScrolledText
 from tree import Tree 
 from node import Node 
@@ -42,17 +43,9 @@ class Window:
         self.main_label["font"] = ("Arial", "10", "bold")
         self.main_label.pack()
 
-        # Diretório
-        self.directory_label = Label(self.directory_container,text="Diretório do arquivo:", font=self.default_font)
-        self.directory_label.pack(side=LEFT)
-
-        self.directory = Entry(self.directory_container)
-        self.directory["width"] = 30
-        self.directory["font"] = self.default_font
-        self.directory.pack(side=LEFT)
-
+        # Arquivo
         self.button_directory = Button(self.directory_container)
-        self.button_directory["text"] = "Atualizar"
+        self.button_directory["text"] = "Procurar arquivo"
         self.button_directory["font"] = ("Calibri", "8")
         self.button_directory["width"] = 15
         self.button_directory["command"] = self.update_directory
@@ -115,7 +108,9 @@ class Window:
         self.button_birth.pack()
 
     def update_directory(self):
-        people_file = open(self.directory.get(), 'r')
+        root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+       
+        people_file = open(root.filename, 'r')
 
         b_date = []
 
