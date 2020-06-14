@@ -48,7 +48,7 @@ class Window:
         self.button_directory["font"] = ("Calibri", "8")
         self.button_directory["width"] = 15
         self.button_directory["command"] = self.search_archive
-        self.button_directory.pack()        
+        self.button_directory.pack()
 
         # CPF
         self.cpf_label = Label(self.cpf_container,text="CPF:", font=self.default_font)
@@ -153,9 +153,10 @@ class Window:
             birth_final = birth_initial - birth_final
             birth_initial = birth_initial - birth_final
         
-        pic_date = self.t_birth.search_range_bdate(birth_initial, birth_final)
+        people_list = []
+        people_list = self.t_birth.search_range_bdate(birth_initial, birth_final)
         
-        self.show_list_of_people(pic_date)
+        self.show_list_of_people(people_list)
 
     def show_list_of_people(self, people_list):
         if len(people_list) > 0:
@@ -166,6 +167,7 @@ class Window:
 
             for i in range(len(people_list)):
                 st.insert(END, people_list[i].string())
+                
 root = Tk()
 Window(root)
 root.mainloop()  

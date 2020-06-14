@@ -80,7 +80,7 @@ class Tree:
             self.balance(new_node, 1)
 
     def rinsert_node(self, inserted_node, current_node):
-        if self.get_order(inserted_node) == self.get_order(current_node):
+        if inserted_node.get_key().get_cpf() == current_node.get_key().get_cpf():
             return
         elif self.get_order(inserted_node) > self.get_order(current_node):
             if current_node.get_target_right() == None:
@@ -94,7 +94,33 @@ class Tree:
                inserted_node.set_source(current_node)
                return
             self.rinsert_node(inserted_node, current_node.get_target_left())
-    
+
+    def balance(self, current_node, adjust_more_nodes):
+        if current_node == None:
+            return
+        factor_current = self.factor(current_node)
+        factor_left = self.factor(current_node.get_target_left())
+        factor_right = self.factor(current_node.get_target_right())
+
+        if factor_current > 1 and factor_left > 0:
+            self.symple_rotation_right(current_node)
+            if adjust_more_nodes:
+                return
+        elif factor_current < -1 and factor_right < 0:
+            self.symple_rotation_left(current_node)
+            if adjust_more_nodes:
+                return
+        elif factor_current > 1 and factor_left < 0:
+            self.double_rotation_right(current_node)
+            if adjust_more_nodes:
+                return
+        elif factor_current < -1 and factor_right > 0:
+            self.double_rotation_left(current_node)
+            if adjust_more_nodes:
+                return
+
+        self.balance(current_node.get_source(), adjust_more_nodes)  
+            
     def symple_rotation_right(self, current_node):
         left_node = current_node.get_target_left()
 
@@ -141,38 +167,7 @@ class Tree:
 
     def double_rotation_left(self, current_node):
         self.symple_rotation_right(current_node.get_target_right())
-        self.symple_rotation_left(current_node)
-
-    def height(self, current_node):
-        if current_node == None:
-            return -1
-        return 1 + max(self.height(current_node.get_target_left()), self.height(current_node.get_target_right()))    
-        
-    def balance(self, current_node, adjust_more_nodes):
-        if current_node == None:
-            return
-        factor_current = self.factor(current_node)
-        factor_left = self.factor(current_node.get_target_left())
-        factor_right = self.factor(current_node.get_target_right())
-
-        if factor_current > 1 and factor_left > 0:
-            self.symple_rotation_right(current_node)
-            if adjust_more_nodes:
-                return
-        elif factor_current < -1 and factor_right < 0:
-            self.symple_rotation_left(current_node)
-            if adjust_more_nodes:
-                return
-        elif factor_current > 1 and factor_left < 0:
-            self.double_rotation_right(current_node)
-            if adjust_more_nodes:
-                return
-        elif factor_current < -1 and factor_right > 0:
-            self.double_rotation_left(current_node)
-            if adjust_more_nodes:
-                return
-
-        self.balance(current_node.get_source(), adjust_more_nodes)  
+        self.symple_rotation_left(current_node)  
 
     def factor(self, node):
         if node == None:
@@ -180,3 +175,8 @@ class Tree:
         node_left = node.get_target_left() 
         node_right = node.get_target_right()
         return self.height(node_left) - self.height(node_right)
+
+    def height(self, current_node):
+        if current_node == None:
+            return -1
+        return 1 + max(self.height(current_node.get_target_left()), self.height(current_node.get_target_right()))          
