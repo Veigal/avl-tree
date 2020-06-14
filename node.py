@@ -3,18 +3,15 @@
 ########################################################
 
 class Node:
-    def __init__(self, name, source = None, target_left = None, target_right = None ):
+    def __init__(self, key, source = None, target_left = None, target_right = None ):
         self.source = source
-        self.name = name
+        self.key = key
         self.target_left = target_left
         self.target_right = target_right
 
     #Sets
     def set_source(self, source):
         self.source = source
-
-    def set_name(self, name):
-        self.name = name
 
     def set_target_left(self, target_left):
         self.target_left = target_left
@@ -27,8 +24,8 @@ class Node:
     def get_source(self):
         return self.source
 
-    def get_name(self):
-        return self.name
+    def get_key(self):
+        return self.key
         
     def get_target_left(self):
         return self.target_left

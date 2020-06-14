@@ -12,10 +12,6 @@ import re
 class Window:
     def __init__(self, master=None):
 
-        self.t_birth = Tree("birth")
-        self.t_name = Tree("name")
-        self.t_cpf = Tree("cpf")
-
         self.default_font = ("Arial", "10")
 
         self.main_container = Frame(master)
@@ -115,6 +111,10 @@ class Window:
        
         people_file = open(root.filename, 'r')
 
+        self.t_birth = Tree("birth")
+        self.t_name = Tree("name")
+        self.t_cpf = Tree("cpf")
+
         b_date = []
 
         for line in people_file:
@@ -129,7 +129,7 @@ class Window:
     def search_by_cpf(self):
         cpf = re.sub("[^0-9]", "", self.cpf.get())
         people_list = []
-        people_list.append(self.t_cpf.search_node(cpf, 0).get_name())
+        people_list.append(self.t_cpf.search_node(cpf, 0).get_key())
         self.show_list_of_people(people_list)
 
     def search_by_name(self):

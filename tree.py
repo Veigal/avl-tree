@@ -1,3 +1,7 @@
+########################################################
+#Author: Leonardo Deitos Veiga
+########################################################
+
 from node import Node 
 from people import People 
 
@@ -6,13 +10,13 @@ class Tree:
         self.root = None
         self.indexer = indexer
 
-    def get_key(self, node):
+    def get_order(self, node):
         if self.indexer == "cpf":
-            return node.get_name().get_cpf()
+            return node.get_key().get_cpf()
         elif self.indexer == "birth":
-            return node.get_name().get_b_date()
+            return node.get_key().get_b_date()
         else:
-            return node.get_name().get_name()
+            return node.get_key().get_name()
     
     def get_root(self):
         return self.root
@@ -26,12 +30,12 @@ class Tree:
                 print("Fim da busca")
             return None
         if show_rote:
-            print("\nPassou pelo nodo: " + str(current_node.get_name()))
-        if str(wanted_node_name) == current_node.get_name().get_cpf():
+            print("\nPassou pelo nodo: " + str(current_node.get_key()))
+        if str(wanted_node_name) == current_node.get_key().get_cpf():
             if show_rote:
                 print("Fim da busca")
             return current_node
-        return self.rsearch_node(wanted_node_name, current_node.get_target_left() if str(wanted_node_name) < current_node.get_name().get_cpf() else current_node.get_target_right(), show_rote)
+        return self.rsearch_node(wanted_node_name, current_node.get_target_left() if str(wanted_node_name) < current_node.get_key().get_cpf() else current_node.get_target_right(), show_rote)
 
     def search_range_bdate(self, start_date, end_date):
         people_list = []
@@ -41,9 +45,9 @@ class Tree:
     def rsearch_range_bdate(self, start_date, end_date, node, people_list):
         if node == None:
             return
-        date = node.get_name().get_b_date()
+        date = node.get_key().get_b_date()
         if int(date) >= start_date and int(date) <= end_date:
-            people_list.append(node.get_name())
+            people_list.append(node.get_key())
         if int(date) <= end_date:
             self.rsearch_range_bdate(start_date, end_date, node.get_target_right(), people_list)
         if int(date) >= start_date:
@@ -57,10 +61,10 @@ class Tree:
     def rsearch_people_by_name(self, name, node, people_list):
         if node == None:
             return
-        actual_name = node.get_name().get_name()
+        actual_name = node.get_key().get_name()
         if actual_name >= name:
             if actual_name.find(name, 0, len(name)) != -1:
-                people_list.append(node.get_name())              
+                people_list.append(node.get_key())              
             self.rsearch_people_by_name(name, node.get_target_right(), people_list)
             self.rsearch_people_by_name(name, node.get_target_left(), people_list)
         if actual_name < name:
@@ -76,9 +80,9 @@ class Tree:
             self.balance(new_node, 1)
 
     def rinsert_node(self, inserted_node, current_node):
-        if self.get_key(inserted_node) == self.get_key(current_node):
+        if self.get_order(inserted_node) == self.get_order(current_node):
             return
-        elif self.get_key(inserted_node) > self.get_key(current_node):
+        elif self.get_order(inserted_node) > self.get_order(current_node):
             if current_node.get_target_right() == None:
                 current_node.set_target_right(inserted_node)
                 inserted_node.set_source(current_node)
